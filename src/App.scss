@@ -1,0 +1,11 @@
+@import './assets/styles/global.scss';
+
+// components
+@import './assets/styles/components/navbar.scss';
+@import './assets/styles/components/footer.scss';
+@import './assets/styles/components/project.scss';
+@import './assets/styles/components/pagination.scss';
+
+// pages
+@import './assets/styles/auth/login.scss';
+@import './assets/styles/pages/projects.scss';

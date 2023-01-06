@@ -1,0 +1,112 @@
+.projectsWrapper {
+    margin: 0 auto;
+    margin-bottom: 4rem;
+    height: auto;
+    min-height: 100vh;
+    width: 100%;
+    max-width: 1180px;
+}
+
+.topbar {
+    margin-top: 2rem;
+    display: flex;
+    height: 4rem;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.searchBox {
+    display: flex;
+    height: 2.5rem;
+    width: 320px;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 0.2rem 0 0 0.2rem;
+    overflow: hidden;
+}
+
+.searchBox .searchIcon {
+    display: flex;
+    width: 15%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    background: seagreen;
+}
+
+.searchBox .searchInput {
+    width: 85%;
+    height: 100%;
+}
+
+.searchInput input {
+    padding: 0 0.8rem;
+    color: #fff;
+    font-size: 1.1rem;
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    background: #222;
+    box-sizing: border-box;
+}
+
+.searchInput input::placeholder {
+    color: #aaa;
+}
+
+.itemCountBox {
+    display: flex;
+    height: 2.5rem;
+    width: calc(100% - 720px - 1.2rem);
+    align-items: center;
+    justify-content: flex-start;
+    border: none;
+    border-top: 2px dashed #222;
+    border-bottom: 2px dashed #222;
+}
+
+.searchCountBox {
+    width: calc(100% - 520px);
+}
+
+.itemCountBox p {
+    padding: 0 1rem;
+    color: #fff;
+    font-size: 1.1rem;
+    box-sizing: border-box;
+}
+
+.filterProjects {
+    height: 2.5rem;
+    width: 200px;
+}
+
+.sortItems {
+    margin-right: 1.2rem;
+    height: 2.5rem;
+    width: 200px;
+}
+
+#slctProjects,
+#sortProjects {
+    padding: 0 0.6rem;
+    height: 100%;
+    width: 100%;
+    color: #fff;
+    font-size: 1.1rem;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background: #20ac68;
+    border-radius: 0.2rem;
+    box-sizing: border-box;
+}
+
+#sortProjects {
+    color: #fff;
+    background: #222;
+    border-radius: 0 0.2rem 0.2rem 0;
+}

@@ -1,0 +1,109 @@
+/* footer */
+.footer {
+    margin: 0 auto;
+    margin-top: 2rem;
+    display: flex;
+    height: 6rem;
+    max-width: 1180px;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid #222;
+}
+
+.footerText p {
+    margin: 0.2rem 0;
+    color: silver;
+    font-size: 0.9rem;
+}
+
+.footer p a {
+    color: #49f2a0;
+    font-size: 0.9rem;
+    text-decoration: none;
+}
+
+.footerLinks {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.footerLinks a {
+    margin-left: 1rem;
+    color: #444;
+    font-size: 1.6rem;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+
+/* global */
+span.c {
+    background: #4242ef;
+}
+
+span.cpp {
+    background: #4242ef;
+}
+
+span.python {
+    background: steelblue;
+}
+
+span.html {
+    background: #d2711c;
+}
+
+span.css {
+    background: steelblue;
+}
+
+span.javascript {
+    background: #b7a531;
+}
+
+span.bootstrap {
+    background: #4331b7;
+}
+
+span.react {
+    background: #308fe8;
+}
+
+span.node {
+    background: #6b8e23;
+}
+
+span.express {
+    color: #222;
+    background: #fff;
+}
+
+span.mongodb {
+    background: #488e23;
+}
+
+span.data-structure {
+    background: seagreen;
+}
+
+span.algorithm {
+    background: crimson;
+}
+
+span.sql {
+    background: #6161eb;
+}
+
+span.git {
+    background: #f34f29;
+}
+
+span.vs-code {
+    background: #0078d7;
+}
+
+span.chrome {
+    background: linear-gradient(45deg, #1a73e8, #e23a2e, #fbbf12, #279847);
+}

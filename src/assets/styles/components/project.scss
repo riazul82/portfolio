@@ -1,0 +1,141 @@
+.projectContainer {
+    margin-top: 1rem;
+    width: 100%;
+}
+
+.projectContent {
+    margin-bottom: 1rem;
+    padding: 0.2rem;
+    position: relative;
+    display: flex;
+    height: auto;
+    width: 100%;
+    background: #222;
+    border-radius: 0.1rem;
+    box-shadow: 0.1rem 0.1rem 1.2rem #111;
+}
+
+.projectImage {
+    height: 8rem;
+    width: 220px;
+}
+
+.projectImage img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+    border-radius: 0.1rem;
+}
+
+.projectStatus {
+    position: absolute;
+    bottom: 0rem;
+    left: 0rem;
+}
+
+.projectStatus .status {
+    padding: 0.1rem 0.6rem;
+    color: #fff;
+    font-size: 0.9rem;
+    border-radius: 0 0.4rem 0 0;
+    box-shadow: 0.05rem 0.05rem 0.2rem 0.02rem #111;
+}
+
+.projectOverview {
+    margin: 0.4rem 0 0.4rem 1rem;
+    display: flex;
+    width: calc(100% - (400px));
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.projectTitleLink {
+    position: relative;
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.projectTitleLink::before {
+    position: absolute;
+    bottom: 0.16rem;
+    left: 0;
+    content: '';
+    height: 0.1rem;
+    width: 100%;
+    background: #6e1df9;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: all 0.3s ease;
+}
+
+.projectTitleLink:hover {
+    color: #6e1df9;
+}
+
+.projectTitleLink:hover::before {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.projectDesc {
+    color: #bbb;
+    font-size: 1rem;
+}
+
+.projectDate {
+    color: orange;
+    font-size: 1rem;
+}
+
+.tags {
+    margin: 0.3rem 0 0.2rem 0;
+}
+
+.tags span {
+    padding: 0.1rem 0.3rem;
+    margin-right: 0.32rem;
+    color: #fff;
+    font-size: 0.9rem;
+    border-radius: 0.1rem;
+}
+
+.projectLinks {
+    width: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.projectLinks div {
+    display: flex;
+    height: auto;
+    width: 94%;
+    align-items: center;
+    justify-content: flex-start;
+    cursor: pointer;
+    background: #333;
+    border: 2px dashed #444;
+    border-radius: 0.1rem;
+    transition: all 0.3s ease;
+}
+
+.projectLinks div:hover {
+    background: #222;
+}
+
+.detailsLink,
+.sourceLink,
+.previewLink {
+    padding: 0.24rem 0.6rem;
+    color: #fff;
+    font-size: 1rem;
+    height: 100%;
+    width: 100%;
+    text-decoration: none;
+    box-sizing: border-box;
+}
