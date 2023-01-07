@@ -1,27 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 
-import { BiSearch } from 'react-icons/bi';
-
-import { data } from '../data';
+// components
 import Project from '../components/Project';
 import Pagination from '../components/Pagination';
 import AppLayout from '../Layouts/AppLayout';
 
+// contexts
+import { ProjectsContext } from '../context/ProjectsContextProvider';
+
+// icons
+import { BiSearch } from 'react-icons/bi';
+
 const Projects = () => {
+    const projects = useContext(ProjectsContext);
     const [selectedItem, setSelectedItem] = useState('all');
-    const [sortType, setSortType] = useState('');
+    const [sortType, setSortType] = useState('latest');
     const [searchText, setSearchText] = useState('');
-    const [projects, setProjects] = useState(data);
     const [searchTimer, setSearchTimer] = useState();
     const [loader, setLoader] = useState(false);
     const [loaderMessage, setLoaderMessage] = useState('');
 
     const [currentPage, setCurrentPage] = useState(1);
     const [projectsPerPage, setProjectsPerPage] = useState(10);
-
-    useEffect(() => {
-        setProjects(data);
-    }, []);
 
     const handleSearchText = (e) => {
         clearTimeout(searchTimer);
@@ -31,7 +31,7 @@ const Projects = () => {
             setTimeout(() => {
                 setSearchText(e.target.value);
                 setLoader(false);
-            }, 900)
+            }, 800)
         );
     }
 
@@ -77,71 +77,67 @@ const Projects = () => {
     
     return (
         <AppLayout>
-        {!loader && handleFilter()}
-        <div className="projectsWrapper">
-            <div className="topbar">
-                <div className="searchBox">
-                    <div className="searchIcon">
-                        <BiSearch style={{color: '#fff', fontSize: '1.1rem'}} />
+            {!loader && handleFilter()}
+            <div className="projectsWrapper">
+                <div className="topbar">
+                    <div className="searchBox">
+                        <div className="searchIcon">
+                            <BiSearch style={{color: '#fff', fontSize: '1.1rem'}} />
+                        </div>
+                        <div className="searchInput">
+                            <input type="text" onChange={handleSearchText} placeholder="Search..." />
+                        </div>
                     </div>
-                    <div className="searchInput">
-                        <input type="text" onChange={handleSearchText} placeholder="Search..." />
+
+                    <div className="itemCountBox">
+                        <p className="itemCountMsg">
+                            <span>{filteredProjects.length} of {projects.length} items | </span> 
+                            <span>{selectedItem}</span>
+                        </p>
+                    </div>
+
+                    <div className="sortItems">
+                        <select id="sortProjects" value={sortType} onChange={handleSortType}>
+                            <option value="latest">Latest</option>
+                            <option value="oldest">Oldest</option>
+                            <option value="ascending">Ascending</option>
+                            <option value="descending">Descending</option>
+                            <option value="bigger">Bigger</option>
+                            <option value="smaller">Smaller</option>
+                        </select>
+                    </div>
+
+                    <div className="filterProjects">
+                        <select id="slctProjects" value={selectedItem} onChange={handleSelectedItem}>
+                            <option value="all">All</option>
+                            <option value="html-css">HTML & CSS</option>
+                            <option value="javascript">JavaScript</option>
+                            <option value="react">React</option>
+                            <option value="mern">MERN Stack</option>
+                            <option value="mini-projects">Mini Projects</option>
+                            <option value="javascript-mini">JavaScript Mini</option>
+                            <option value="react-mini">React Mini</option>
+                            <option value="fullstack-mini">Fullstack Mini</option>
+                            <option value="single-page">Single Page</option>
+                            <option value="multi-page">Multi Page</option>
+                            <option value="frontend-web">Forntend Web</option>
+                            <option value="fullstack-web">Fullstack Web</option>
+                        </select>
                     </div>
                 </div>
 
-                <div className="itemCountBox">
-                    <p className="itemCountMsg">
-                        <span>{filteredProjects.length} of {projects.length} items | </span> 
-                        <span>{selectedItem}</span>
-                    </p>
+                <div className="projectContainer">
+                    {loader && <p style={{color: '#fff', fontSize: '1.1rem'}}>{loaderMessage}</p>}
+                    {
+                        !loader && ((filteredProjects.length === 0) ?
+                        <p style={{color: '#fff', fontSize: '1.1rem'}}>No Item Found!</p> :
+                        filteredProjects.slice(firstIndex, lastIndex).map((project) => {
+                            return <Project key={project.id} project={project} projects={projects} />
+                        }))
+                    }
                 </div>
-
-                
-
-                <div className="sortItems">
-                    <select id="sortProjects" value={sortType} onChange={handleSortType}>
-                        <option value="sort">Sort by:</option>
-                        <option value="sort-latest">Latest</option>
-                        <option value="sort-oldest">Oldest</option>
-                        <option value="sort-ascending">Ascending</option>
-                        <option value="sort-descending">Descending</option>
-                        <option value="sort-bigger">Bigger</option>
-                        <option value="sort-smaller">Smaller</option>
-                    </select>
-                </div>
-
-                <div className="filterProjects">
-                    <select id="slctProjects" value={selectedItem} onChange={handleSelectedItem}>
-                        <option value="all">All</option>
-                        <option value="html-css">HTML & CSS</option>
-                        <option value="javascript">JavaScript</option>
-                        <option value="react">React</option>
-                        <option value="mern">MERN Stack</option>
-                        <option value="mini-projects">Mini Projects</option>
-                        <option value="javascript-mini">JavaScript Mini</option>
-                        <option value="react-mini">React Mini</option>
-                        <option value="fullstack-mini">Fullstack Mini</option>
-                        <option value="single-page">Single Page</option>
-                        <option value="multi-page">Multi Page</option>
-                        <option value="frontend-web">Forntend Web</option>
-                        <option value="fullstack-web">Fullstack Web</option>
-                    </select>
-                </div>
+                <Pagination itemsLength={filteredProjects.length} getPaginationData={getPaginationData} />
             </div>
-
-
-            <div className="projectContainer">
-                {loader && <p style={{color: '#fff', fontSize: '1.1rem'}}>{loaderMessage}</p>}
-                {
-                    !loader && ((filteredProjects.length === 0) ?
-                    <p style={{color: '#fff', fontSize: '1.1rem'}}>No Item Found!</p> :
-                    filteredProjects.slice(firstIndex, lastIndex).map((item) => {
-                        return <Project key={item.id} item={item} projects={projects} />
-                    }))
-                }
-            </div>
-            <Pagination itemsLength={filteredProjects.length} getPaginationData={getPaginationData} />
-        </div>
         </AppLayout>
     );
 }

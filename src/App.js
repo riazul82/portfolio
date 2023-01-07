@@ -7,22 +7,28 @@ import Projects from './pages/Projects';
 import Error404 from './pages/Error404';
 
 import './App.scss';
-// import Videos from './pages/Videos';
+import Videos from './pages/Videos';
 import About from './pages/About';
 import Login from './auth/Login';
 import ProjectDetails from './pages/ProjectDetails';
+import Dashboard from './admin/Dashboard';
+import UploadProject from './admin/UploadProject';
+import Home from './pages/Home';
 
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<Projects/>} />
+        <Route path='/' element={<Home/>} />
         <Route path='/projects' element={<Projects/>} />
-        {/* <Route path='/videos' element={<Videos/>} />
-        <Route path='/videos/:title' element={<Watch/>} /> */}
+        <Route path='/videos' element={<Videos/>} />
+        {/* <Route path='/videos/:title' element={<Watch/>} /> */}
+        <Route path='/:title' element={<ProjectDetails />} />
         <Route path='/projects/:title' element={<ProjectDetails />} />
         <Route path='/about' element={<About />} />
         <Route path='/me/login' element={<Login />} />
+        <Route path='/admin/dashboard' element={<Dashboard />} />
+        <Route path='/admin/project/upload' element={<UploadProject />} />
         <Route path='*' element={<Error404/>} />
       </Routes>
     </BrowserRouter>

@@ -1,58 +1,6 @@
 export const data = [
     {
-        id: 1,
-        type: "website",
-        category:  ["frontend-web", "single-page", "javascript"],
-        title: "E-Grocery Shop",
-        desc: "Ecommerce Grocery Shop using Html, CSS & JavaScript",
-        status: "updating...",
-        thumb: "#",
-        images: ["#"],
-        fonts: ["josefin-sans"],
-        date: "May, 2022",
-        tags: ["html", "css", "javascript"],
-        plugins: [{
-            name: "animate-css",
-            link: "https://animate.style/"
-        }],
-        icons: [{
-            name: "icomoon",
-            link: "https://icomoon.io/"
-        }],
-        imageSrc: [
-            {
-                site: "pexels",
-                link: "https://www.pexels.com/",
-            },
-            {
-                site: "unsplahs",
-                link: "https://unsplash.com/"
-            }
-        ],
-        preview: "https://e-grocery-shop.netlify.app/",
-        source: "https://github.com/riazul82/E-Commerce-Grocery-Shop",
-        localStorage: false,
-        database: {
-            status: false,
-            dbname: null
-        },
-        authentication: {
-            status: false,
-            authName: null
-        },
-        responsive: true,
-        tutorial: {
-            available: false,
-            link: null
-        },
-        demo: {
-            available: true,
-            link: "https://youtu.be/J6tV1kBI_OU",
-            embed: "https://www.youtube.com/embed/J6tV1kBI_OU"
-        }
-    },
-    {
-        id: 2,
+        // id: 2,
         type: "website",
         category:  ["frontend-web", "single-page", "javascript"],
         title: "Online Fruit Shop",
@@ -337,15 +285,6 @@ export const data = [
         }],
         preview: "https://digital-cloock.netlify.app/",
         source: "https://github.com/riazul82/Digital-Clock",
-        localStorage: false,
-        database: {
-            status: false,
-            dbname: null
-        },
-        authentication: {
-            status: false,
-            authName: null
-        },
         responsive: true,
         tutorial: {
             available: true,

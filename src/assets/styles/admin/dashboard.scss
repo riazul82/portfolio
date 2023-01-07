@@ -1,0 +1,41 @@
+.admin {
+    margin: 0 auto;
+    margin-top: 2rem;
+    max-width: 1180px;
+    width: 100%;
+    min-height: 100vh;
+
+    .adminTopbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .adminTopbarLeft {
+            display: flex;
+            margin-right: 0.8rem;
+            align-items: center;
+            justify-content: flex-start;
+
+            .adminTopbarLink {
+                color: #fff;
+                font-size: 1rem;
+                padding: 0.4rem 0.8rem;
+                background: seagreen;
+                border-radius: 0.1rem;
+            }
+        }
+
+        .adminTopbarRight {
+            button {
+                padding: 0.4rem 0.8rem;
+                color: #fff;
+                font-size: 1rem;
+                background: crimson;
+                border: none;
+                outline: none;
+                cursor: pointer;
+                border-radius: 0.1rem;
+            }
+        }
+    }
+}
