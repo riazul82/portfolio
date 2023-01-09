@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import AppLayout from '../Layouts/AppLayout';
 
 // firebase
 import { fs, storage } from '../firebase';
@@ -11,13 +12,13 @@ import { MdUpload } from 'react-icons/md';
 // toast
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import AppLayout from '../Layouts/AppLayout';
 
 const UploadProject = () => {
     const [selectedImg, setSelectedImg] = useState(null);
+    const [selectedImages, setSelectedImages] = useState([]);
     const [previewImg, setPreviewImg] = useState(null);
+    const [previewImages, setPreviewImages] = useState([]);
     const [btnDisabled, setBtnDisabled] = useState(false);
-
     const [project, setProject] = useState({
         type: 'website',
         category: '',
@@ -26,20 +27,31 @@ const UploadProject = () => {
         date: '',
         status: 'completed',
         fonts: '',
-        plugins: '',
         tags: '',
+        icons: '',
+        plugins: '',
         previewLink: '',
-        gitHubLink: '',
+        githubLink: '',
         youtubeLink: '',
         youtubeEmbedLink: '',
         youtubeVideoType: 'no-video',
         responsive: 'yes',
-        localStorage: 'no',
         thumbUrl: '',
         images: []
     });
 
     useEffect(() => {
+        let objUrls = [];
+
+        if (selectedImages.length) {
+            for (let i = 0; i < selectedImages.length; i ++) {
+                const objUrl = URL.createObjectURL(selectedImages[i]);
+                console.log(objUrl);
+                objUrls.push(objUrl);
+            }
+            setPreviewImages(objUrls);
+        }
+
         if (selectedImg === null || selectedImg === undefined) {
             return;
         }
@@ -47,31 +59,14 @@ const UploadProject = () => {
         const objUrl = URL.createObjectURL(selectedImg);
         setPreviewImg(objUrl);
 
-        // free memory when component is unmounted
-        return (() => URL.revokeObjectURL(objUrl));
-    }, [selectedImg]);
-
-    // handle input change
-    const handleChange = (e) => {
-        let checkBoxInput = document.querySelectorAll('.checkboxInput');
-        project.category = [];
-
-        for (let i = 0; i < checkBoxInput.length; i ++) {
-            if (checkBoxInput[i].checked) {
-                project.category.push(checkBoxInput[i].value);
+        return (() => {
+            URL.revokeObjectURL(objUrl);
+            for (let i = 0; i < selectedImages.length; i ++) {
+                URL.revokeObjectURL(objUrls[i]);
             }
-        }
+        });
 
-        setProject({...project, category: project.category});
-
-        let name = e.target.name;
-
-        if (name === 'title' || name === 'desc' || name === 'date' || name === 'fonts' || name === 'plugins' || name === 'tags') {
-            setProject({...project, [e.target.name]: (e.target.value).split(/\s+/).join(' ')});
-        } else {
-            setProject({...project, [e.target.name]: (e.target.value).split(/\s+/).join('')});    
-        }
-    }
+    }, [selectedImg, selectedImages]);
 
     // upload project data to firestore
     const addDataToFireStore = async (project) => {
@@ -93,6 +88,22 @@ const UploadProject = () => {
 
         setBtnDisabled(true);
 
+        if (project.fonts !== '') {
+            project.fonts = project.fonts.split(' ');
+        }
+
+        if (project.plugins !== '') {
+            project.plugins = project.plugins.split(' ');
+        }
+
+        if (project.tags !== '') {
+            project.tags = project.tags.split(' ');
+        }
+
+        if (project.icons !== '') {
+            project.icons = project.icons.split(' ');
+        }
+        
         const storageRef = ref(storage, `images/projects/${selectedImg.name}`);
         const uploadTask = uploadBytesResumable(storageRef, selectedImg);
 
@@ -135,15 +146,15 @@ const UploadProject = () => {
                     date: '',
                     status: 'completed',
                     fonts: '',
-                    plugins: '',
                     tags: '',
+                    icons: '',
+                    plugins: '',
                     previewLink: '',
-                    gitHubLink: '',
+                    githubLink: '',
                     youtubeLink: '',
                     youtubeEmbedLink: '',
                     youtubeVideoType: 'no-video',
                     responsive: 'yes',
-                    localStorage: 'no',
                     thumbUrl: '',
                     images: []
                 });
@@ -154,9 +165,6 @@ const UploadProject = () => {
             () => {
                 getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
                     project.thumbUrl = downloadURL;
-                    project.fonts = project.fonts.split(' ');
-                    project.plugins = project.plugins.split(' ');
-                    project.tags = project.tags.split(' ');
                     addDataToFireStore(project);
                     setProject({
                         type: 'website',
@@ -166,15 +174,15 @@ const UploadProject = () => {
                         date: '',
                         status: 'completed',
                         fonts: '',
-                        plugins: '',
                         tags: '',
+                        icons: '',
+                        plugins: '',
                         previewLink: '',
-                        gitHubLink: '',
+                        githubLink: '',
                         youtubeLink: '',
                         youtubeEmbedLink: '',
                         youtubeVideoType: 'no-video',
                         responsive: 'yes',
-                        localStorage: 'no',
                         thumbUrl: '',
                         images: []
                     });
@@ -192,10 +200,42 @@ const UploadProject = () => {
         });
     }
 
+    // handle input change
+    const handleChange = (e) => {
+        let checkBoxInput = document.querySelectorAll('.checkboxInput');
+        project.category = [];
+
+        for (let i = 0; i < checkBoxInput.length; i ++) {
+            if (checkBoxInput[i].checked) {
+                project.category.push(checkBoxInput[i].value);
+            }
+        }
+
+        setProject({...project, category: project.category});
+
+        let name = e.target.name;
+
+        if (name === 'title' || name === 'desc' || name === 'date' || name === 'fonts' || name === 'tags' || name === 'icons' || name === 'plugins') {
+            setProject({...project, [e.target.name]: (e.target.value).split(/\s+/).join(' ')});
+        } else {
+            setProject({...project, [e.target.name]: (e.target.value).split(/\s+/).join('')});    
+        }
+    }
+
     const handleImageInput = (e) => {
         // fix select file cancelation problem
         if (e.target.files[0] !== undefined) {
             setSelectedImg(e.target.files[0]);
+        }
+    }
+
+    const handleMultipleImageInput = (e) => {
+        if (e.target.files.length) {
+            let images = [];
+            for (let i = 0; i < e.target.files.length; i ++) {
+                images.push(e.target.files[i]);
+            }
+            setSelectedImages(images);
         }
     }
 
@@ -218,7 +258,7 @@ const UploadProject = () => {
 
                     <div className="chooseProjectCategories">
                         <div className="title">
-                            <p>Choose category: </p>
+                            <p>Choose category </p>
                         </div>
                         <div className="checkboxInputField">
                             <input type="checkbox" id="html-css" className="checkboxInput" onChange={handleChange} name="html-css" value="html-css" />
@@ -282,14 +322,14 @@ const UploadProject = () => {
                         </select>
                     </div>
                 
-                    <input type="text" name="fonts" value={project.fonts} onChange={handleChange} placeholder="Font names" required />
-                    <input type="text" name="plugins" value={project.plugins} onChange={handleChange} placeholder="Plugins" required />
+                    <input type="text" name="fonts" value={project.fonts} onChange={handleChange} placeholder="Font names" />
                     <input type="text" name="tags" value={project.tags} onChange={handleChange} placeholder="Tags" required />
+                    <input type="text" name="icons" value={project.icons} onChange={handleChange} placeholder="Icons" />
+                    <input type="text" name="plugins" value={project.plugins} onChange={handleChange} placeholder="Plugins" />
                     <input type="text" name="previewLink" value={project.previewLink} onChange={handleChange} placeholder="Preview Link" required />
-                    <input type="text" name="gitHubLink" value={project.gitHubLink} onChange={handleChange} placeholder="Source Code Link" required />
-                    
-                    <input type="text" name="youtubeLink" value={project.youtubeLink} onChange={handleChange} placeholder="Youtube Link" required />
-                    <input type="text" name="youtubeEmbedLink" value={project.youtubeEmbedLink} onChange={handleChange} placeholder="Youtube Embed Link" required />
+                    <input type="text" name="githubLink" value={project.githubLink} onChange={handleChange} placeholder="Source Code Link" required />
+                    <input type="text" name="youtubeLink" value={project.youtubeLink} onChange={handleChange} placeholder="Youtube Link" />
+                    <input type="text" name="youtubeEmbedLink" value={project.youtubeEmbedLink} onChange={handleChange} placeholder="Youtube Embed Link" />
 
                     <div className="projectInputBox">
                         <label htmlFor="youtubeVideoType">Youtube Video Type</label>
@@ -327,11 +367,28 @@ const UploadProject = () => {
                         </div>
                         <input type="file" id="projectImgInput" onChange={handleImageInput} required />
                     </div>
+                    
+                    <div className="multipleImagePreviewBox">
+                        {!previewImages.length ? <p>Images preview</p> :
+                            previewImages.map((img, index) => {
+                                return <img key={index} src={img} alt="preview" />
+                            })
+                        }
+                    </div>
+
+                    <div className="uploadProjectImageInputField">
+                        <div className="imageUploadInputLabel">
+                            <label htmlFor="projectMultipleImgInput">
+                                <MdUpload className="uploadIcon" />
+                                <span>Upload Project Images</span>
+                            </label>
+                        </div>
+                        <input type="file" id="projectMultipleImgInput" onChange={handleMultipleImageInput} multiple />
+                    </div>
 
                     <button type="submit" disabled={btnDisabled}>Add project</button>
                 </form>
             </div>
-            
             <ToastContainer
                 position="top-right"
                 autoClose={5000}

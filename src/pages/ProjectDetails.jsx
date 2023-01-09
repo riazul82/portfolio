@@ -1,21 +1,21 @@
 import React from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 
-import Footer from '../components/Footer';
+import AppLayout from '../Layouts/AppLayout';
 
 const ProjectDetails = () => {
     const location = useLocation();
     const navigate = useNavigate();
 
     const {project, projects} = location.state;
-    const {id, title, type, desc, status, date, fonts, plugins, tags, icons, responsive, localStorage, database, authentication, thumbUrl, gitHubLink, previewLink, youtubeLink, youtubeVideoType} = project;
+    const {id, title, type, desc, status, date, fonts, plugins, tags, icons, responsive, thumbUrl, githubLink, previewLink, youtubeLink, youtubeVideoType} = project;
     
     const index = projects.indexOf(project);
     const prevIndex = (index + projects.length - 1) % projects.length;
     const nextIndex = (index + 1) % projects.length;
 
     return (
-        <>
+        <AppLayout>
             <div className="detailsContent">
                 <div className="detailsHeader">
                     <h1>{title}</h1>
@@ -24,7 +24,7 @@ const ProjectDetails = () => {
                 <div className="detailsBtns">
                     <button>Download Code</button>
                     <a href={previewLink} target="_blank" rel="noreferrer">Preview</a>
-                    <a href={gitHubLink} target="_blank" rel="noreferrer">Github</a>
+                    <a href={githubLink} target="_blank" rel="noreferrer">Github</a>
                     {youtubeVideoType === 'tutorial' && <a href={youtubeLink} target="_blank" rel="noreferrer">Tutorial</a>}
                     {youtubeVideoType === 'demo' && <a href={youtubeLink} target="_blank" rel="noreferrer">Demo</a>}
                 </div>
@@ -51,7 +51,7 @@ const ProjectDetails = () => {
                     </thead>
                     <tbody>
                         <tr className="detailsTableRow">
-                            <td className="detailsAttr">Type: </td>
+                            <td className="detailsAttr">Type </td>
                             <td className="detailsValue">{type}</td>
                         </tr>
 
@@ -65,29 +65,28 @@ const ProjectDetails = () => {
                             <td className="detailsValue">{status}</td>
                         </tr>
 
-                        <tr className="detailsTableRow">
+                        {fonts && <tr className="detailsTableRow">
                             <td className="detailsAttr">Fonts: </td>
                             <td className="detailsValue">
                                 {fonts.map((item, index) => {
                                     return <span key={index} className="detailsValue">{(index !== fonts.length - 1) ? item + ', ' : item}</span>
                                 })}
                             </td>
-                        </tr>
+                        </tr>}
 
                         {icons && <tr className="detailsTableRow">
                             <td className="detailsAttr">Icons: </td>
                             <td className="detailsValue">
                                 {icons.map((icon, index) => {
-                                    return <a key={index} href={icon.link} title={icon.link} rel="noreferrer" target="_blank">{(icons.length - 1 !== index) ? icon.name + ', ' : icon.name}</a>
+                                    return <span key={index}>{(icons.length - 1 !== index) ? icon + ', ' : icon}</span>
                                 })}
                             </td>
                         </tr>}
-
-                        {plugins && <tr className="detailsTableRow">
+                        {plugins.length && <tr className="detailsTableRow">
                             <td className="detailsAttr">Plugins: </td>
                             <td className="detailsValue">{
-                                plugins.map((item, index) => {
-                                    return <span key={index}>{item}</span>
+                                plugins.map((plugin, index) => {
+                                    return <span key={index}>{plugin}</span>
                                 })
                             }</td>
                         </tr>}
@@ -105,30 +104,12 @@ const ProjectDetails = () => {
                                 })
                             }</td>
                         </tr>
-
-                        {localStorage && <tr className="detailsTableRow">
-                            <td className="detailsAttr">Local Storage: </td>
-                            <td className="detailsValue">{localStorage}</td>
-                        </tr>}
-
-                        {database && <tr className="detailsTableRow">
-                            <td className="detailsAttr">Database: </td>
-                            <td className="detailsValue">{
-                                database.map((elem, index) => {
-                                    return <span key={index}>{elem}</span>
-                                })
-                            }</td>
-                        </tr>}
-
-                        {authentication && <tr className="detailsTableRow">
-                            <td className="detailsAttr">Authentication: </td>
-                            <td className="detailsValue">{authentication}</td>
-                        </tr>}
                     </tbody>
                 </table>
 
-                <div className="backToProjectsBtn">
+                <div className="projectDetailsRedirectBtns">
                     <button onClick={() => {navigate('/projects')}}>Back to Projects</button>
+                    <button onClick={() => {navigate('/videos')}}>Go to Videos</button>
                 </div>
 
                 <div className="projectSwitchNextAndPrevBtn">
@@ -158,8 +139,7 @@ const ProjectDetails = () => {
                     </div>
                 </div>
             </div>
-            <Footer />
-        </>
+        </AppLayout>
     );
 }
 

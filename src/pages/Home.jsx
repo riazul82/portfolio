@@ -4,8 +4,8 @@ import AppLayout from '../Layouts/AppLayout';
 const Home = () => {
     return (
         <AppLayout>
-            <div>
-                <h1>Hello!</h1>
+            <div className="home">
+                <h1>Welcome!</h1>
             </div>
         </AppLayout>
     );

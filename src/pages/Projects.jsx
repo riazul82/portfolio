@@ -31,7 +31,7 @@ const Projects = () => {
             setTimeout(() => {
                 setSearchText(e.target.value);
                 setLoader(false);
-            }, 800)
+            }, 600)
         );
     }
 
@@ -81,8 +81,8 @@ const Projects = () => {
             <div className="projectsWrapper">
                 <div className="topbar">
                     <div className="searchBox">
-                        <div className="searchIcon">
-                            <BiSearch style={{color: '#fff', fontSize: '1.1rem'}} />
+                        <div className="searchIconBox">
+                            <BiSearch style={{color: '#fff', fontSize: '1.3rem'}} className="searchIcon" />
                         </div>
                         <div className="searchInput">
                             <input type="text" onChange={handleSearchText} placeholder="Search..." />

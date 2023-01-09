@@ -3,20 +3,19 @@ import React, { useState, useEffect } from 'react';
 import { BiSearch } from 'react-icons/bi';
 
 import { Link } from 'react-router-dom';
-import { data } from '../data';
 import Video from '../components/Video';
 import AppLayout from '../Layouts/AppLayout';
 
 const Videos = () => {
     const [projects, setProjects] = useState('');
-
+    const data = [];
     const [selectedItem, setSelectedItem] = useState('all');
     const [searchText, setSearchText] = useState('');
     const [searchTimer, setSearchTimer] = useState();
 
     useEffect(() => {
         setProjects(data.filter((item) => item.tutorial.available || item.demo.available));
-    }, []);
+    }, [data]);
 
     const handleSearchText = (e) => {
         clearTimeout(searchTimer);
