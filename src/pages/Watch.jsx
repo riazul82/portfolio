@@ -3,16 +3,16 @@ import { useNavigate, useLocation, Link } from 'react-router-dom';
 
 import AppLayout from '../Layouts/AppLayout';
 
-const ProjectDetails = () => {
+const Watch = () => {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const {project, projects} = location.state;
-    const {id, title, type, desc, status, date, fonts, plugins, tags, icons, responsive, thumbUrl, githubLink, previewLink, youtubeLink, youtubeVideoType} = project;
+    const {video, videos} = location.state;
+    const {id, title, type, desc, status, date, fonts, plugins, tags, icons, responsive, githubLink, previewLink, youtubeLink, youtubeVideoType, youtubeEmbedLink} = video;
     
-    const index = projects.indexOf(project);
-    const prevIndex = (index + projects.length - 1) % projects.length;
-    const nextIndex = (index + 1) % projects.length;
+    const index = videos.indexOf(video);
+    const prevIndex = (index + videos.length - 1) % videos.length;
+    const nextIndex = (index + 1) % videos.length;
 
     return (
         <AppLayout>
@@ -25,22 +25,11 @@ const ProjectDetails = () => {
                     <button>Download Code</button>
                     <a href={previewLink} target="_blank" rel="noreferrer">Preview</a>
                     <a href={githubLink} target="_blank" rel="noreferrer">Github</a>
-                    {youtubeVideoType === 'tutorial' && <a href={youtubeLink} target="_blank" rel="noreferrer">Tutorial</a>}
-                    {youtubeVideoType === 'demo' && <a href={youtubeLink} target="_blank" rel="noreferrer">Demo</a>}
+                    {youtubeVideoType === 'tutorial' && <a href={youtubeLink} target="_blank" rel="noreferrer">Watch on Youtube</a>}
+                    {youtubeVideoType === 'demo' && <a href={youtubeLink} target="_blank" rel="noreferrer">Watch on Youtube</a>}
                 </div>
-                <div className="detailsImageBox">
-                    <img src={thumbUrl} alt={'project'} />
-                </div>
-                <div className="detailsMoreImages">
-                    <div className="detailsMoreImgBox">
-                        <img src={thumbUrl} alt={'project'} />
-                    </div>
-                    <div className="detailsMoreImgBox"></div>
-                    <div className="detailsMoreImgBox"></div>
-                    <div className="detailsMoreImgBox"></div>
-                    <div className="detailsMoreImgBox"></div>
-                    <div className="detailsMoreImgBox"></div>
-                    <div className="detailsMoreImgBox"></div>
+                <div className="WatchBox">
+                    <iframe width="100%" height="100%" src={youtubeEmbedLink} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
                 <table className="detailsInfo">
                     <thead>
@@ -109,30 +98,30 @@ const ProjectDetails = () => {
                 </table>
 
                 <div className="projectDetailsRedirectBtns">
+                    <button onClick={() => {navigate('/projects/videos')}}>Back to videos</button>
                     <button onClick={() => {navigate('/projects')}}>Back to Projects</button>
-                    <button onClick={() => {navigate('/projects/videos')}}>Go to Videos</button>
                 </div>
 
                 <div className="projectSwitchNextAndPrevBtn">
-                    <Link to={`/projects/${projects[prevIndex].id}`} state={{project: projects[prevIndex], projects}} className="switchLink">Prev</Link>
-                    <Link to={`/projects/${projects[nextIndex].id}`} state={{project: projects[nextIndex], projects}} className="switchLink">Next</Link>
+                    <Link to={`/projects/videos/${videos[prevIndex].id}`} state={{video: videos[prevIndex], videos}} className="switchLink">Prev</Link>
+                    <Link to={`/projects/videos/${videos[nextIndex].id}`} state={{video: videos[nextIndex], videos}} className="switchLink">Next</Link>
                 </div>
 
                 <div className="projectSwitchCountBox">
-                    <p className="projectSwitchCount">Switch: {(index < 9) ? '0' + (index + 1) : (index + 1)}/{projects.length}</p>
+                    <p className="projectSwitchCount">Switch: {(index < 9) ? '0' + (index + 1) : (index + 1)}/{videos.length}</p>
                 </div>
 
                 <div className="detailsAllProjectsBox">
                     <div className="detailsAllProjects">
-                        {projects.map((project) => {
-                            return <Link key={project.id} to={`/projects/${project.id}`} state={{project, projects}} className="detailsAllProjectsBoxLink">{
-                                <div className={(project.id === id) ? 'detailsSwitchBoxProject activeSwitchBoxProject' : 'detailsSwitchBoxProject'}>
+                        {videos.map((video) => {
+                            return <Link to={`/projects/videos/${video.id}`} key={video.id} state={{video, videos}} className="detailsAllProjectsBoxLink">{
+                                <div className={(video.id === id) ? 'detailsSwitchBoxProject activeSwitchBoxProject' : 'detailsSwitchBoxProject'}>
                                     <div className="switchBoxImageContent">
-                                        <img src={project.thumbUrl} alt="project" />
+                                        <img src={video.thumbUrl} alt="video" />
                                     </div>
                                     <div className="switchBoxDetailsContent">
-                                        <p className="switchBoxDetailsContentTitle">{(project.title.length > 22) ? project.title.slice(0, 22).concat('...') : project.title}</p>
-                                        <p className="switchBoxDetailsContentDesc">{(project.desc.length > 40) ? project.desc.slice(0, 40).concat('...') : project.desc}</p>
+                                        <p className="switchBoxDetailsContentTitle">{(video.title.length > 22) ? video.title.slice(0, 22).concat('...') : video.title}</p>
+                                        <p className="switchBoxDetailsContentDesc">{(video.desc.length > 40) ? video.desc.slice(0, 40).concat('...') : video.desc}</p>
                                     </div>
                                 </div>
                             }</Link>
@@ -144,4 +133,4 @@ const ProjectDetails = () => {
     );
 }
 
-export default ProjectDetails;
+export default Watch;

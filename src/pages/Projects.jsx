@@ -82,7 +82,7 @@ const Projects = () => {
                 <div className="topbar">
                     <div className="searchBox">
                         <div className="searchIconBox">
-                            <BiSearch style={{color: '#fff', fontSize: '1.3rem'}} className="searchIcon" />
+                            <BiSearch style={{color: '#fff', fontSize: '1.3rem'}} />
                         </div>
                         <div className="searchInput">
                             <input type="text" onChange={handleSearchText} placeholder="Search..." />

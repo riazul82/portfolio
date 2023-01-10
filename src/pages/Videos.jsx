@@ -1,28 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 
 import { BiSearch } from 'react-icons/bi';
 
 import { Link } from 'react-router-dom';
 import Video from '../components/Video';
+import { ProjectsContext } from '../context/ProjectsContextProvider';
 import AppLayout from '../Layouts/AppLayout';
 
 const Videos = () => {
-    const [projects, setProjects] = useState('');
-    const data = [];
+    const projects = useContext(ProjectsContext);
+    
+    const [videos, setVideos] = useState('');
     const [selectedItem, setSelectedItem] = useState('all');
     const [searchText, setSearchText] = useState('');
     const [searchTimer, setSearchTimer] = useState();
 
     useEffect(() => {
-        setProjects(data.filter((item) => item.tutorial.available || item.demo.available));
-    }, [data]);
+        setVideos(projects.filter((item) => item.youtubeVideoType === 'tutorial' || item.youtubeVideoType === 'demo'));
+    }, [projects]);
 
     const handleSearchText = (e) => {
         clearTimeout(searchTimer);
         setSearchTimer(
             setTimeout(() => {
                 setSearchText(e.target.value);
-            }, 900)
+            }, 600)
         );
     }
 
@@ -41,15 +43,15 @@ const Videos = () => {
         }
     }
 
-    let filteredProjects = [];
+    let filteredVideos = [];
 
     const handleFilter = () => {
-        filteredProjects = projects && projects.filter((item) => {
+        filteredVideos = videos && videos.filter((item) => {
             if (selectedItem === 'all' && filterSearchItems(item)) {
                 return item;
-            } else if (item.demo.available && selectedItem === 'demos' && filterSearchItems(item)) {
+            } else if (item.youtubeVideoType === 'demo' && selectedItem === 'demos' && filterSearchItems(item)) {
                 return item;
-            } else if (item.tutorial.available && selectedItem === 'tutorials' && filterSearchItems(item)) {
+            } else if (item.youtubeVideoType === 'tutorial' && selectedItem === 'tutorials' && filterSearchItems(item)) {
                 return item;
             } else {
                 return null;
@@ -59,12 +61,12 @@ const Videos = () => {
 
     return (
         <AppLayout>
-            {projects && handleFilter()}
+            {videos && handleFilter()}
             <div className="videos">
                 <div className="topbar">
                     <div className="searchBox">
-                        <div className="searchIcon">
-                            <BiSearch style={{color: '#fff', fontSize: '1.1rem'}} />
+                        <div className="searchIconBox">
+                            <BiSearch style={{color: '#fff', fontSize: '1.3rem'}} />
                         </div>
                         <div className="searchInput">
                             <input type="text" onChange={handleSearchText} placeholder="Search..." />
@@ -73,8 +75,8 @@ const Videos = () => {
 
                     <div className="itemCountBox searchCountBox">
                         <p className="itemCountMsg">
-                            <span style={{color: '#ccc'}}>Projects count: </span>
-                            <span>{filteredProjects.length} of {projects.length} items | </span> 
+                            <span style={{color: '#ccc'}}>Video count: </span>
+                            <span>{filteredVideos.length} of {videos.length} items | </span> 
                             <span>{selectedItem}</span>
                         </p>
                     </div>
@@ -89,11 +91,11 @@ const Videos = () => {
                 </div>
 
                 <div className="videosWrap">
-                    {(filteredProjects.length === 0) ? 
+                    {(filteredVideos.length === 0) ? 
                     <p style={{color: '#fff', fontSize: '1.1rem'}}>No Item Found!</p> :
-                    filteredProjects.map((item, index) => {
-                        return <Link to={item.title.split(' ').join('-').toLowerCase()} state={{item, projects}} key={index}>
-                            <Video item={item} />
+                    filteredVideos.map((video) => {
+                        return <Link to={video.id} key={video.id} state={{video, videos}}>
+                            <Video item={video} />
                         </Link>
                     })}
                 </div>
