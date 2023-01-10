@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 
 // components
 import Project from '../components/Project';
@@ -13,8 +13,10 @@ import { BiSearch } from 'react-icons/bi';
 
 const Projects = () => {
     const projects = useContext(ProjectsContext);
+
+    const [filteredProjects, setFilteredProjects] = useState([]);
     const [selectedItem, setSelectedItem] = useState('all');
-    const [sortType, setSortType] = useState('latest');
+    const [sortType, setSortType] = useState('bigger');
     const [searchText, setSearchText] = useState('');
     const [searchTimer, setSearchTimer] = useState();
     const [loader, setLoader] = useState(false);
@@ -22,6 +24,71 @@ const Projects = () => {
 
     const [currentPage, setCurrentPage] = useState(1);
     const [projectsPerPage, setProjectsPerPage] = useState(10);
+
+    useEffect(() => {
+        let filteredProjectItems = [];
+
+        const filterSearchItems = (item) => {
+            let mainTxt = ''.concat(item.title, item.desc, item.type, item.tags.join(''), item.category.join('')).replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+            let srchTxt = searchText.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+    
+            if (searchText === '' || mainTxt.includes(srchTxt)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    
+        filteredProjectItems = projects.filter((item) => {
+            if (selectedItem === 'all' && filterSearchItems(item)) {
+                return item;
+            } else if (item.category.includes(selectedItem) && filterSearchItems(item)) {
+                return item;
+            } else {
+                return null;
+            }
+        });
+
+        if (sortType === 'latest') {
+            filteredProjectItems.sort((a, b) => {
+                let t1 = new Date(a.date).getTime();
+                let t2 = new Date(b.date).getTime();
+                return t2 - t1;
+            });
+        } else if (sortType === 'oldest') {
+            filteredProjectItems.sort((a, b) => {
+                let t1 = new Date(a.date).getTime();
+                let t2 = new Date(b.date).getTime();
+                return t1 - t2;
+            });
+        } else if (sortType === 'ascending') {
+            filteredProjectItems.sort((a, b) => {
+                let x = a.title.toLowerCase();
+                let y = b.title.toLowerCase();
+                if (x < y) return -1;
+                if (x > y) return 1;
+                return 0;
+            });
+        } else if (sortType === 'descending') {
+            filteredProjectItems.sort((a, b) => {
+                let x = a.title.toLowerCase();
+                let y = b.title.toLowerCase();
+                if (x > y) return -1;
+                if (x < y) return 1;
+                return 0;
+            });
+        } else if (sortType === 'bigger') {
+            filteredProjectItems.sort((a, b) => {
+                return b.size - a.size;
+            });
+        } else if (sortType === 'smaller') {
+            filteredProjectItems.sort((a, b) => {
+                return a.size - b.size;
+            });
+        }
+    
+        setFilteredProjects([...filteredProjectItems]);
+    }, [projects, searchText, selectedItem, sortType]);
 
     const handleSearchText = (e) => {
         clearTimeout(searchTimer);
@@ -43,41 +110,16 @@ const Projects = () => {
         setSortType(e.target.value);
     }
 
-    const filterSearchItems = (item) => {
-        let mainTxt = ''.concat(item.title, item.desc, item.type, item.tags.join(''), item.category.join('')).replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
-        let srchTxt = searchText.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
-
-        if (searchText === '' || mainTxt.includes(srchTxt)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     const getPaginationData = (currentPage, itemsPerPage) => {
         setCurrentPage(parseInt(currentPage));
         setProjectsPerPage(parseInt(itemsPerPage));
     }
 
-    let filteredProjects = [];
     let lastIndex = currentPage * projectsPerPage;
     let firstIndex = lastIndex - projectsPerPage;
-
-    const handleFilter = () => {
-        filteredProjects = projects.filter((item) => {
-            if (selectedItem === 'all' && filterSearchItems(item)) {
-                return item;
-            } else if (item.category.includes(selectedItem) && filterSearchItems(item)) {
-                return item;
-            } else {
-                return null;
-            }
-        });
-    }
     
     return (
         <AppLayout>
-            {!loader && handleFilter()}
             <div className="projectsWrapper">
                 <div className="topbar">
                     <div className="searchBox">

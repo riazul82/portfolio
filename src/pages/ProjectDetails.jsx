@@ -87,7 +87,7 @@ const ProjectDetails = () => {
                             <td className="detailsAttr">Plugins</td>
                             <td className="detailsValue">
                                 {plugins.map((plugin, index) => {
-                                    return <span key={index}>{plugin}</span>
+                                    return <span key={index}>{(plugins.length - 1 !== index) ? plugin + ', ' : plugin}</span>
                                 })}
                             </td>
                         </tr>}
