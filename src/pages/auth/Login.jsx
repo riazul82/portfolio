@@ -1,9 +1,9 @@
 import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { LoginContext } from '../context/LoginContextProvider';
+import { LoginContext } from '../../context/LoginContextProvider';
 
 // firebase
-import { auth } from '../firebase';
+import { auth } from '../../firebase';
 import { signInWithEmailAndPassword } from "firebase/auth";
 
 // icons

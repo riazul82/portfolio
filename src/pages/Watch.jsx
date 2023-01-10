@@ -10,6 +10,7 @@ const Watch = () => {
     const {video, videos} = location.state;
     const {id, title, type, desc, status, date, fonts, plugins, tags, icons, responsive, githubLink, previewLink, youtubeLink, youtubeVideoType, youtubeEmbedLink} = video;
     
+    // project indexes for switch btns
     const index = videos.indexOf(video);
     const prevIndex = (index + videos.length - 1) % videos.length;
     const nextIndex = (index + 1) % videos.length;

@@ -3,6 +3,8 @@ import React, { useState, useContext, useEffect } from 'react';
 // components
 import Project from '../components/Project';
 import Pagination from '../components/Pagination';
+
+// layouts
 import AppLayout from '../Layouts/AppLayout';
 
 // contexts
@@ -115,6 +117,7 @@ const Projects = () => {
         setProjectsPerPage(parseInt(itemsPerPage));
     }
 
+    // indexes for pagination
     let lastIndex = currentPage * projectsPerPage;
     let firstIndex = lastIndex - projectsPerPage;
     

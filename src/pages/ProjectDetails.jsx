@@ -10,6 +10,7 @@ const ProjectDetails = () => {
     const {project, projects} = location.state;
     const {id, title, type, desc, status, date, fonts, plugins, tags, icons, responsive, thumbUrl, githubLink, previewLink, youtubeLink, youtubeVideoType} = project;
     
+    // project indexes for switch btns
     const index = projects.indexOf(project);
     const prevIndex = (index + projects.length - 1) % projects.length;
     const nextIndex = (index + 1) % projects.length;

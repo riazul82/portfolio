@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import AppLayout from '../Layouts/AppLayout';
+import AppLayout from '../../Layouts/AppLayout';
 
 const Dashboard = () => {
     return (

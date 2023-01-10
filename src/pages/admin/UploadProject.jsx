@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import AppLayout from '../Layouts/AppLayout';
+import AppLayout from '../../Layouts/AppLayout';
 
 // firebase
-import { fs, storage } from '../firebase';
+import { fs, storage } from '../../firebase';
 import { addDoc, collection } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 

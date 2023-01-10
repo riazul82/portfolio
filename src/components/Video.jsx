@@ -8,7 +8,7 @@ const Video = ({item}) => {
             <div className="videoThumb">
                 <img src={thumbUrl} alt="thumb" />
             </div>
-            <div className="videoDesc">
+            <div className="videoTitle">
                 <p>{title}</p>
             </div>
         </div>
