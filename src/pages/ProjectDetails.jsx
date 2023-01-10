@@ -51,22 +51,22 @@ const ProjectDetails = () => {
                     </thead>
                     <tbody>
                         <tr className="detailsTableRow">
-                            <td className="detailsAttr">Type </td>
+                            <td className="detailsAttr">Type</td>
                             <td className="detailsValue">{type}</td>
                         </tr>
 
                         <tr className="detailsTableRow">
-                            <td className="detailsAttr">Created on: </td>
+                            <td className="detailsAttr">Created on</td>
                             <td className="detailsValue">{date}</td>
                         </tr>
 
                         <tr className="detailsTableRow">
-                            <td className="detailsAttr">Status: </td>
+                            <td className="detailsAttr">Status</td>
                             <td className="detailsValue">{status}</td>
                         </tr>
 
                         {fonts && <tr className="detailsTableRow">
-                            <td className="detailsAttr">Fonts: </td>
+                            <td className="detailsAttr">Fonts</td>
                             <td className="detailsValue">
                                 {fonts.map((item, index) => {
                                     return <span key={index} className="detailsValue">{(index !== fonts.length - 1) ? item + ', ' : item}</span>
@@ -75,34 +75,35 @@ const ProjectDetails = () => {
                         </tr>}
 
                         {icons && <tr className="detailsTableRow">
-                            <td className="detailsAttr">Icons: </td>
+                            <td className="detailsAttr">Icons</td>
                             <td className="detailsValue">
                                 {icons.map((icon, index) => {
                                     return <span key={index}>{(icons.length - 1 !== index) ? icon + ', ' : icon}</span>
                                 })}
                             </td>
                         </tr>}
-                        {plugins.length && <tr className="detailsTableRow">
-                            <td className="detailsAttr">Plugins: </td>
-                            <td className="detailsValue">{
-                                plugins.map((plugin, index) => {
+
+                        {plugins && <tr className="detailsTableRow">
+                            <td className="detailsAttr">Plugins</td>
+                            <td className="detailsValue">
+                                {plugins.map((plugin, index) => {
                                     return <span key={index}>{plugin}</span>
-                                })
-                            }</td>
+                                })}
+                            </td>
                         </tr>}
 
                         <tr className="detailsTableRow">
-                            <td className="detailsAttr">Responsive: </td>
+                            <td className="detailsAttr">Responsive</td>
                             <td className="detailsValue">{responsive}</td>
                         </tr>
 
                         <tr className="detailsTableRow">
-                            <td className="detailsAttr">Tags: </td>
-                            <td className="detailsValue tags">{
-                                tags.map((elem, index) => {
+                            <td className="detailsAttr">Tags</td>
+                            <td className="detailsValue tags">
+                                {tags.map((elem, index) => {
                                     return <span key={index} className={elem}>{elem}</span>
-                                })
-                            }</td>
+                                })}
+                            </td>
                         </tr>
                     </tbody>
                 </table>
