@@ -19,10 +19,13 @@ import Login from './pages/auth/Login';
 import Dashboard from './pages/admin/Dashboard';
 import UploadProject from './pages/admin/UploadProject';
 
+// effects
+import ScrollToTop from './effects/ScrollToTop';
 
 const App = () => {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         <Route path='/' element={<Home/>} />
         <Route path='/about' element={<About />} />
