@@ -15,7 +15,7 @@ const Project = ({ project, projects }) => {
                     (status === 'completed' && {backgroundColor: "seagreen"}) || 
                     (status === 'running' && {backgroundColor: "crimson"}) ||
                     (status === 'updating' && {backgroundColor: "#c0bd0c"})} 
-                    className="status">{status}</p>
+                    className="status">{status === 'completed' ? status : status + '...'}</p>
             </div>
 
             <div className="projectOverview">
